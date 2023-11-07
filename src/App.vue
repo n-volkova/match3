@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="current"
-  >
+  <div :class="current">
     <div class="header">
       <div
         class="logo"
@@ -10,10 +8,12 @@
     </div>
 
     <div class="main">
-      <component
-        :is="currentComponent"
-        @play="play"
-      />
+      <transition name="fade">
+        <component
+          :is="currentComponent"
+          @play="play"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -28,8 +28,7 @@ onMounted(() => {
   fancyLog();
 });
 
-const current = ref('match3');
-// const current = ref('landing');
+const current = ref('landing');
 const currentComponent = computed(() => current.value === 'landing' ? Landing : Match3);
 
 const play = () => {
@@ -53,7 +52,6 @@ html {
 }
 
 #app {
-  min-height: 100vh;
   min-height: -webkit-fill-available;
   padding-bottom: 1px;
   background-color: #000;
@@ -63,6 +61,10 @@ html {
   justify-content: space-evenly;
   color: #fff;
   overflow-x: hidden;
+
+  @media (max-width: 1250px) {
+    min-height: 100vh;
+  }
 
   .match3 {
     user-select: none;
